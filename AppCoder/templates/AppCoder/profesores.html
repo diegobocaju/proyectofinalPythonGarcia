@@ -1,0 +1,37 @@
+<div>
+    {% extends "AppCoder/inicio.html" %}
+    {% load static %}
+    
+        {% block contenidoQueCambia %}
+            <p>Profesores disponibles</p>
+            <table id="tableInfoProfesores">
+                <tr id="tituloTablaProfesores">
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Eliminar</th>
+                    <th>Editar</th>
+                </tr>
+                
+                    {% for profesor in Profesores%}
+                        <tr>
+                            <td>{{profesor.nombre}}</td>
+                            <td>{{profesor.apellido}}</td>
+                            <td>{{profesor.email}}</td>
+                            <td><button class="btn btn-danger btnEliminar"><a href="{% url 'eliminarProfesor' profesor.nombre %}"> X </a></button> </td>
+                            <td><button class="btn btn-danger btnEditar"><a href="{% url 'editarProfesor' profesor.nombre %}"> Editar </a></button> </td>
+                        </tr>
+                    {% endfor %}  
+            </table>            
+            <div class="formSetProfesor">
+                {% block setProfesor %}
+                {% endblock %}
+            </div>          
+            <div class="formGetProfesor">
+                {% block getProfesor %}
+                {% endblock %}
+            </div>
+            <a href="{% url 'setProfesor' %}"><button class="btn">Crear Profesor</button></a>
+            <a href="{% url 'getProfesor' %}"><button class="btn">Buscar Profesor</button></a> 
+        {% endblock %}
+</div>

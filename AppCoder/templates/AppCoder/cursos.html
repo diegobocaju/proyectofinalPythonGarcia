@@ -1,0 +1,36 @@
+<div>
+    {% extends "AppCoder/inicio.html" %}
+    {% load static %}
+    
+        {% block contenidoQueCambia %}
+            <p>Cursos disponibles</p>
+            <table id="tableInfoCursos">
+                <tr id="tituloTablaCursos">
+                    <th>Nombre</th>
+                    <th>Camada</th>
+                    <th>Horario</th>
+                    <th>Eliminar</th>
+                </tr>
+                
+                    {% for curso in Cursos%}
+                        <tr>
+                            <td>{{curso.nombre}}</td>
+                            <td>{{curso.camada}}</td>
+                            <td>{{curso.horario}}</td>
+                            <td><button class="btn btn-danger btnEliminar"><a href="{% url 'eliminarCurso' curso.nombre %}"> X </a></button> </td>
+                            <td><button class="btn btn-warning btnEditar"><a href="{% url 'editarCurso' curso.nombre %}">Editar</a></button></td>
+                        </tr>
+                    {% endfor %}  
+            </table>
+            <div class="formSetCurso">
+                {% block setCurso %}
+                {% endblock %}
+            </div>          
+            <div class="formGetCurso">
+                {% block getCurso %}
+                {% endblock %}
+            </div>
+            <a href="{% url 'setCurso' %}"><button class="btn">Crear Curso</button>
+            <a href="{% url 'getCurso' %}"><button class="btn">Buscar Curso</button>
+        {% endblock %}
+</div>

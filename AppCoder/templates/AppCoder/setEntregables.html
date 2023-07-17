@@ -1,0 +1,13 @@
+<div>
+    {% extends "AppCoder/entregables.html" %}
+    {% load static %}
+    
+    {% block setEntregable %}
+        <form action="/AppCoder/setEntregable/" method="post"> {% csrf_token %}
+            <table>
+                {{ miFormulario4.as_table }}
+            </table>
+            <input type = "submit" value="Enviar" class="btn btn-primary">
+        </form>
+    {% endblock %}    
+</div>

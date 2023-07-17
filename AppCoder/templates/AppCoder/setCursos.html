@@ -1,0 +1,13 @@
+<div>
+    {% extends "AppCoder/cursos.html" %}
+    {% load static %}
+    
+    {% block setCurso %}
+        <form action="/AppCoder/setCurso/" method="post"> {% csrf_token %}
+            <table>
+                {{ miFormulario3.as_table }}
+            </table>
+            <input type = "submit" value="Enviar" class="btn btn-primary">
+        </form>
+    {% endblock %}    
+</div>

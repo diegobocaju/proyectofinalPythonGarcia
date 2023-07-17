@@ -1,0 +1,13 @@
+<div>
+
+    {% load static %}
+    
+    {% block setCursos %}
+    <form action="" method="post"> {% csrf_token %}
+        <table>
+            {{ miFormulario3.as_table }}
+        </table>
+        <input class="btn btn-primary" type="submit" value="Enviar">
+    </form>
+    {% endblock %} 
+</div>

@@ -1,0 +1,17 @@
+
+{% load static %}
+{% block contenidoQueCambia %}
+    <div>
+        <ul>
+            <li> {{user.username}} </li>
+            <li> {{user.email}} </li>
+            <li> {{user.first_name}} </li>
+            <li> {{user.last_name}} </li>
+        </ul>
+        <a href="/AppCoder/Perfil/editarPerfil" class="btn" style="text-decoration: nonce;color:blue"> Editar Perfil</a>
+        <a href="/AppCoder/Perfil/changeAvatar" class="btn" style="text-decoration: nonce;color:blue"> Avatar </a>
+    
+    </div>
+
+
+{% endblock %}
