@@ -7,7 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-
+from django.views import View
 
 @login_required
 def inicio(request):
@@ -19,6 +19,12 @@ def inicio(request):
 def cursos(request):
     Cursos = Curso.objects.all()
     return render(request, "AppCoder/cursos.html",{"Cursos": Cursos})
+
+class MiVista(View):
+    def get(self, request):
+        fotos = Foto.objects.all()
+        context = {'Fotos': fotos}
+        return render(request, 'mi_template.html', context)
 
 @login_required
 def profesores(request):
