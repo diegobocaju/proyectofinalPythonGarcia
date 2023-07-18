@@ -1,6 +1,8 @@
 .contenido{
     margin-top: 30px;
+    background-image: none !important
 }
+
 
 .componenteEntregables{
     background-color: thistle;
@@ -29,6 +31,7 @@ body {
     background-image: url("https://static.nationalgeographicla.com/files/styles/image_3200/public/006-library-biblioteca-angelica-a-roma_0002.webp?w=1450&h=1162&q=100"); 
     background-size:cover;
     background-position:center;
+    background-repeat: no-repeat;
 }
 
 .titulo {

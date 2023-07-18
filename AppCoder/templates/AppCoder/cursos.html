@@ -1,8 +1,12 @@
 <div>
     {% extends "AppCoder/inicio.html" %}
     {% load static %}
-    
-        {% block contenidoQueCambia %}
+
+    {% block contenidoQueCambia %}
+
+
+
+        <div class="contenido-container">
             <p>Cursos disponibles</p>
             <table id="tableInfoCursos">
                 <tr id="tituloTablaCursos">
@@ -10,17 +14,18 @@
                     <th>Camada</th>
                     <th>Horario</th>
                     <th>Eliminar</th>
+                    <th>Editar</th>
                 </tr>
                 
-                    {% for curso in Cursos%}
-                        <tr>
-                            <td>{{curso.nombre}}</td>
-                            <td>{{curso.camada}}</td>
-                            <td>{{curso.horario}}</td>
-                            <td><button class="btn btn-danger btnEliminar"><a href="{% url 'eliminarCurso' curso.nombre %}"> X </a></button> </td>
-                            <td><button class="btn btn-warning btnEditar"><a href="{% url 'editarCurso' curso.nombre %}">Editar</a></button></td>
-                        </tr>
-                    {% endfor %}  
+                {% for curso in Cursos %}
+                    <tr>
+                        <td>{{ curso.nombre }}</td>
+                        <td>{{ curso.camada }}</td>
+                        <td>{{ curso.horario }}</td>
+                        <td><button class="btn btn-danger btnEliminar"><a href="{% url 'eliminarCurso' curso.nombre %}">X</a></button></td>
+                        <td><button class="btn btn-warning btnEditar"><a href="{% url 'editarCurso' curso.nombre %}">Editar</a></button></td>
+                    </tr>
+                {% endfor %}
             </table>
             <div class="formSetCurso">
                 {% block setCurso %}
@@ -30,7 +35,9 @@
                 {% block getCurso %}
                 {% endblock %}
             </div>
-            <a href="{% url 'setCurso' %}"><button class="btn">Crear Curso</button>
-            <a href="{% url 'getCurso' %}"><button class="btn">Buscar Curso</button>
-        {% endblock %}
+            <a href="{% url 'setCurso' %}"><button class="btn">Crear Curso</button></a>
+            <a href="{% url 'getCurso' %}"><button class="btn">Buscar Curso</button></a>
+        </div>
+
+    {% endblock %}
 </div>

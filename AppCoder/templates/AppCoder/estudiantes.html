@@ -1,38 +1,43 @@
 <div>
     {% extends "AppCoder/inicio.html" %}
     {% load static %}
-    
-        {% block contenidoQueCambia %}
-            <p>Estudiantes Disponibles</p>
-            <table id="tableInfoEstudiantes">
-                <tr id="tituloTablaEstudiantes">
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
+
+    {% block contenidoQueCambia %}
+        <p>Estudiantes Disponibles</p>
+        <table id="tableInfoEstudiantes">
+            <tr id="tituloTablaEstudiantes">
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                {% if user.is_superuser %}
                     <th>Eliminar</th>
                     <th>Editar</th>
+                {% endif %}
+            </tr>
 
+            {% for estudiante in Estudiantes %}
+                <tr>
+                    <td>{{ estudiante.nombre }}</td>
+                    <td>{{ estudiante.apellido }}</td>
+                    <td>{{ estudiante.email }}</td>
+                    {% if user.is_superuser %}
+                        <td><button class="btn btn-danger btnEliminar"><a href="{% url 'eliminarEstudiante' estudiante.nombre %}">X</a></button></td>
+                        <td><button class="btn btn-warning btnEditar"><a href="{% url 'editarEstudiante' estudiante.nombre %}">Editar</a></button></td>
+                    {% endif %}
                 </tr>
-                
-                    {% for estudiante in Estudiantes%}
-                        <tr>
-                            <td>{{estudiante.nombre}}</td>
-                            <td>{{estudiante.apellido}}</td>
-                            <td>{{estudiante.email}}</td>
-                            <td><button class="btn btn-danger btnEliminar"><a href="{% url 'eliminarEstudiante' estudiante.nombre %}"> X </a></button> </td>
-                            <td><button class="btn btn-warning btnEditar"><a href="{% url 'editarEstudiante' estudiante.nombre %}">Editar</a></button></td>
-                        </tr>
-                    {% endfor %}  
-            </table>
-            <div class="formSetEstudiante">
-                {% block setEstudiante %}
-                {% endblock %}
-            </div>          
-            <div class="formGetEstudiante">
-                {% block getEstudiante %}
-                {% endblock %}
-            </div>  
+            {% endfor %}
+        </table>
+        <div class="formSetEstudiante">
+            {% block setEstudiante %}
+            {% endblock %}
+        </div>
+        <div class="formGetEstudiante">
+            {% block getEstudiante %}
+            {% endblock %}
+        </div>
+        {% if user.is_superuser %}
             <a href="{% url 'setEstudiante' %}"><button class="btn btn-gradient">Crear Estudiante</button></a>
-            <a href="{% url 'getEstudiante' %}"><button class="btn btn-shadow">Buscar Estudiante</button></a>        
-        {% endblock %}
+            <a href="{% url 'getEstudiante' %}"><button class="btn btn-shadow">Buscar Estudiante</button></a>
+        {% endif %}
+    {% endblock %}
 </div>

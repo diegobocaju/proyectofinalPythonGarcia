@@ -5,8 +5,9 @@ from AppCoder.models import *
 from AppCoder.forms import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+
 
 @login_required
 def inicio(request):
@@ -33,6 +34,7 @@ def entregables(request):
     Entregables = Entregable.objects.all()
     return render(request, "AppCoder/entregables.html",{"Entregables": Entregables})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def setEstudiantes(request):
     Estudiantes = Estudiante.objects.all()
@@ -48,10 +50,12 @@ def setEstudiantes(request):
         miFormulario1 = formSetEstudiante()
     return render(request, "AppCoder/setEstudiantes.html", {'miFormulario1': miFormulario1,'Estudiantes': Estudiantes})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def getEstudiantes(request):
     return render(request, "AppCoder/getEstudiantes.html")
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def buscarEstudiante(request):
     if request.GET["nombre"]:
@@ -63,6 +67,7 @@ def buscarEstudiante(request):
     
     return HttpResponse(respuesta)
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def setProfesores(request):
     Profesores = Profesor.objects.all()
@@ -79,10 +84,12 @@ def setProfesores(request):
         miFormulario2 = formSetProfesor()
     return render(request, "AppCoder/setProfesores.html", {"miFormulario2":miFormulario2, "Profesores":Profesores})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def getProfesores(request):
     return render(request, "AppCoder/getProfesores.html")
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def buscarProfesor(request):
     if request.GET["nombre"]:
@@ -94,6 +101,7 @@ def buscarProfesor(request):
     
     return HttpResponse(respuesta)
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def setCursos(request):
     Cursos = Curso.objects.all()
@@ -126,6 +134,7 @@ def buscarCurso(request):
     
     return HttpResponse(respuesta)
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def setEntregables(request):
     Entregables = Entregable.objects.all()
@@ -157,6 +166,7 @@ def buscarEntregable(request):
     
     return HttpResponse(respuesta)
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def eliminarEstudiante(request, nombre_estudiante):
     estudiante = Estudiante.objects.get(nombre= nombre_estudiante)
@@ -165,6 +175,7 @@ def eliminarEstudiante(request, nombre_estudiante):
     Estudiantes = Estudiante.objects.all()
     return render (request, "AppCoder/setEstudiantes.html",{'miFormulario1': miFormulario1, 'Estudiantes': Estudiantes})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def eliminarCurso(request, nombre_curso):
     curso = Curso.objects.get(nombre= nombre_curso)
@@ -173,6 +184,7 @@ def eliminarCurso(request, nombre_curso):
     Cursos = Curso.objects.all()
     return render (request, "AppCoder/setCursos.html",{'miFormulario3': miFormulario3, 'Cursos': Cursos})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def eliminarProfesor(request, nombre_profesor):
     profesor = Profesor.objects.get(nombre= nombre_profesor)
@@ -181,6 +193,7 @@ def eliminarProfesor(request, nombre_profesor):
     Profesores = Profesor.objects.all()
     return render (request, "AppCoder/setProfesores.html",{'miFormulario2': miFormulario2, 'Profesor': Profesores})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def eliminarEntregable(request, curso_entregable):
     entregable = Entregable.objects.get(curso= curso_entregable)
@@ -189,6 +202,7 @@ def eliminarEntregable(request, curso_entregable):
     Entregables= Entregable.objects.all()
     return render (request, "AppCoder/setEntregables.html",{'miFormulario2': miFormulario4, 'Entregables': Entregables})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def editarEstudiante(request, nombre_estudiante):
     estudiante = Estudiante.objects.get(nombre=nombre_estudiante)
@@ -207,6 +221,7 @@ def editarEstudiante(request, nombre_estudiante):
     miFormulario1 = formSetEstudiante(initial={'nombre': estudiante.nombre, 'apellido': estudiante.apellido, 'email': estudiante.email})
     return render(request, "AppCoder/editarEstudiantes.html", {"miFormulario1": miFormulario1})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def editarCurso(request, nombre_curso):
     curso = Curso.objects.get(nombre=nombre_curso)
@@ -225,6 +240,7 @@ def editarCurso(request, nombre_curso):
     miFormulario3 = formSetCurso(initial={'nombre': curso.nombre, 'camada': curso.camada, 'horario': curso.horario})
     return render(request, "AppCoder/editarCursos.html", {"miFormulario3": miFormulario3})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def editarProfesor(request, nombre_profesor):
     profesor = Profesor.objects.get(nombre=nombre_profesor)
@@ -243,6 +259,7 @@ def editarProfesor(request, nombre_profesor):
     miFormulario2 = formSetProfesor(initial={'nombre': profesor.nombre, 'apellido': profesor.apellido, 'email': profesor.email})
     return render(request, "AppCoder/editarProfesores.html", {"miFormulario2": miFormulario2})
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def editarEntregable(request, curso_entregable):
     entregable = Entregable.objects.get(curso=curso_entregable)

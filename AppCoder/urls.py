@@ -3,7 +3,7 @@ from AppCoder.views import *
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('', loginWeb),
+    path('', inicio),
     path('inicio/', inicio, name="inicio"),
     path('cursos/', cursos, name="Cursos"),
     path('entregables/', entregables,name="Entregables"),
