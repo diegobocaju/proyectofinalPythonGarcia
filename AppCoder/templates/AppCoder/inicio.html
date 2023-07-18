@@ -39,9 +39,11 @@
 
     </header>
     <main>
+        {% if mostrar_imagen %}
         <div class="imagenContainer">
             <div class="imagen"></div>
         </div>
+        {% endif %}
         <h2>✮ Convierte cada palabra en un tesoro con EduRead ✮</h2>
         <div class="contenido">
             {% block contenidoQueCambia %}

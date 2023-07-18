@@ -12,7 +12,8 @@ from django.contrib.auth.models import User
 @login_required
 def inicio(request):
     avatar = getavatar(request)
-    return render(request, "AppCoder/inicio.html", {"avatar": avatar})
+    mostrar_imagen = True
+    return render(request, 'AppCoder/inicio.html', {'mostrar_imagen': mostrar_imagen, 'avatar': avatar})
 
 
 def cursos(request):

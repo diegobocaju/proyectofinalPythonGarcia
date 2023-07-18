@@ -4,8 +4,6 @@
 
     {% block contenidoQueCambia %}
 
-
-
         <div class="contenido-container">
             <p>Cursos disponibles</p>
             <table id="tableInfoCursos">
@@ -27,6 +25,20 @@
                     </tr>
                 {% endfor %}
             </table>
+
+            <div class="fotos-container">
+                {% for foto in Fotos %}
+                    <div class="foto-item">
+                        <img src="{% static 'assets/images/imagen1.jpg' %}" alt="{{ foto.descripcion }}">
+                        <h3> Cursos de Lectura </h3>
+                        <p>Aprender lectura veloz te ayudará a entender de forma más eficiente y RÁPIDA los textos que lees. 
+                            Podrás disfrutar de todos esos libros que tienes en tu lista de "próximas lecturas", además tendrás más capacidad de retención contenidos, mejorarás tus capacidades de estudio y se te abrirán un sinfín de nuevas oportunidades en el maravilloso mundo de la lectura.
+                            Estos cursos no sólo te enseñarán a que el movimiento de tus ojos sea más veloz, sino que aprenderás a leer más rápido entendiendo lo que lees.
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+            
             <div class="formSetCurso">
                 {% block setCurso %}
                 {% endblock %}
@@ -35,6 +47,7 @@
                 {% block getCurso %}
                 {% endblock %}
             </div>
+            
             <a href="{% url 'setCurso' %}"><button class="btn">Crear Curso</button></a>
             <a href="{% url 'getCurso' %}"><button class="btn">Buscar Curso</button></a>
         </div>

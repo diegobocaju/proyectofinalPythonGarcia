@@ -30,7 +30,5 @@ class Entregable(models.Model):
     entregada = models.BooleanField()
 
 class Avatar(models.Model):
-    #vinculo con el usuario
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    #SubCarpeta de avatares
     image = models.ImageField(upload_to='avatares', null = True, blank = True)
