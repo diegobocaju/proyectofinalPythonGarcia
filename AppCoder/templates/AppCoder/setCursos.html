@@ -1,13 +1,164 @@
-<div>
-    {% extends "AppCoder/cursos.html" %}
-    {% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalles de cursos</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #f5f5f4, #414142); 
+        }
+    </style>
+</head>
+<body>
+{% block setCurso %}
+    <div class="cursos-container">
+        <h1>Listado de Cursos</h1>
+        {% for curso in cursos %}
+            {% ifchanged curso.nombre %}
+                <div class="curso-item">
+                    <h2>{{ curso.nombre }}</h2>
+                    <ul>
+            {% endifchanged %}
+                        {% if curso.nombre == 'Super Cerebro y Super lectura' %}
+                            <h3> {{curso.camada}}: </h3>        
+                            <li>Lunes y Miércoles 14:00 - 16:00     
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li>
+                            <li>Martes y Jueves de 19:00 - 21:00
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li> 
+                            </li>
+                        {% elif curso.nombre == 'Super Lector' %}
+                            <h3> {{curso.camada}}: </h3> 
+                            <li>Martes y Jueves 10:00 - 12:00 
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li>
+                            <li>Lunes y Miércoles 18:00 - 20:00 
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li>
+                        {% elif curso.nombre == 'Lectura en general' %}
+                            <h3> {{curso.camada}}: </h3> 
+                            <li>Martes y Jueves 10:00 - 12:00 
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li>
+                            <li>Lunes y Miércoles 18:00 - 20:00 
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li>
+                        {% elif curso.nombre == 'Lectura Rap. c/ Mapas Mentales' %}
+                            <h3> {{curso.camada}}: </h3> 
+                            <li>Martes y Jueves 13:00 - 15:00 
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li>
+                            <li>Lunes y Miércoles 21:00 - 23:00 
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li>
+                        {% elif curso.nombre == 'Aprendiendo a aprender' %}
+                            <h3> {{curso.camada}}: </h3> 
+                            <li>Martes y Jueves 17:00 - 19:00 
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li>
+                            <li>Lunes y Miércoles 07:00 - 09:00 
+                                <label>
+                                    <input type="checkbox" name="curso_{{ curso.nombre }}_{{ curso.camada }}" value="true">
+                                </label>
+                            </li>
+                        {% endif %}
+            {% ifchanged curso.nombre %}
+                    </ul>
+                </div>
+            {% endifchanged %}
+        {% endfor %}
+    </div>
+    <div id="modal" class="modal">
+        <p>¿Deseas confirmar tu inscripción en el curso?</p>
+        <div class="modal-buttons">
+            <button onclick="confirmarInscripcion()">Confirmar</button>
+            <button onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        function mostrarModal(curso) {
+            var nombreProfesor = '';
+            var emailProfesor = '';
+            var telefonoProfesor = '';
+
+            if (curso === 'Super Cerebro y Super lectura') {
+                nombreProfesor = 'David Sanchez';
+                emailProfesor = 'dsanchez@eduread.com';
+                telefonoProfesor = '1150507170';
+            } else if (curso === 'Super Lector') {
+                nombreProfesor = 'Carolina Rodriguez';
+                emailProfesor = 'rodriguezc@eduread.com';
+                telefonoProfesor = 'Carolina Rodriguez';
+            } else if (curso === 'Lectura en general') {
+                nombreProfesor = 'Maria Lopez';
+                emailProfesor = 'lopezm@eduread.com';
+                telefonoProfesor = '1160598090';
+            } else if (curso === 'Lectura Rap. c/ Mapas Mentales') {
+                nombreProfesor = 'Daniel Gómez';
+                emailProfesor = 'danielgo@eduread.com';
+                telefonoProfesor = '1180700120';
+            } else if (curso === 'Aprendiendo a aprender') {
+                nombreProfesor = 'Ana Gutierrez';
+                emailProfesor = 'agutierrez@eduread.com';
+                telefonoProfesor = '1153536060';
+            }
+
+            const ventanaEmergente = window.open('', '_blank', 'width=400,height=200,top=50%,left=50%,transform=translate(-50%, -50%)');
+            ventanaEmergente.document.write('<h2>Información del Profesor para el Curso Seleccionado:</h2>');
+            ventanaEmergente.document.write('<p>Nombre del profesor: ' + nombreProfesor + '</p>');
+            ventanaEmergente.document.write('<p>Email del profesor: ' + emailProfesor + '</p>');
+            ventanaEmergente.document.write('<p>Teléfono del profesor: ' + telefonoProfesor + '</p>');
+            ventanaEmergente.document.write('<h3> Comunicarse con el profesor para saber metodologia del curso <h3>');
+            ventanaEmergente.document.close();
+            ventanaEmergente.onbeforeunload = function() {
+            window.location.href = '../cursos';
+            };
+        }
+
+        function cerrarModal() {
+            var modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        }
+
+        function confirmarInscripcion() {
+            var cursosSeleccionados = document.querySelectorAll('input[type="checkbox"]:checked');
+            var cursoSeleccionado = cursosSeleccionados[0]; 
+            if (cursoSeleccionado) {
+                var cursoNombre = cursoSeleccionado.name.split('_')[1];
+                mostrarModal(cursoNombre);
+                setTimeout(function () {
+                    mostrarPantallaAzul();
+                    setTimeout(function () {
+                        redirigirAlPerfil();
+                    }, 2000);
+                }, 1000);
+                cerrarModal();
+            } else {
+                alert("Por favor, seleccione un curso antes de confirmar la inscripción.");
+            }
+        }
+
+    </script>
     
-    {% block setCurso %}
-        <form action="/AppCoder/setCurso/" method="post"> {% csrf_token %}
-            <table>
-                {{ miFormulario3.as_table }}
-            </table>
-            <input type = "submit" value="Enviar" class="btn btn-primary">
-        </form>
-    {% endblock %}    
-</div>
+{% endblock %}
+</body>
+</html>

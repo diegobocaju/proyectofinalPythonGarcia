@@ -1,32 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link href=" {% static 'AppCoder/css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'AppCoder/css/bootstrap.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'AppCoder/css/style.css' %}" rel="stylesheet"/>
 
-    <title>Registro  E D U R E A D </title>
+    <title>Registro E D U R E A D</title>
 </head>
 <body>
     <div class="containerForm">
-        <form action="" method="POST" class="formLogin">{% csrf_token%}
-            <h3 style="color:white; font-weight: bold;margin: 30px;display: flex;justify-content: content;align-items: center;"> Registro E D U R E A D </h3>
+        <form action="" method="POST" class="formLogin" onsubmit="return validarFormulario()">{% csrf_token %}
+            <h3 style="color:white; font-weight: bold; margin: 30px; display: flex; justify-content: content; align-items: center;">Registro E D U R E A D</h3>
             <div>
-                <input name="username" type="text" placeholder="User" class="inputLogin">
+                <input name="username" type="text" placeholder="Usuario" class="inputLogin">
             </div>
             <div>
-                <input name="password1" type="password" placeholder="Password" class="inputLogin">
+                <input name="password1" type="password" placeholder="Contraseña" class="inputLogin">
             </div>
             <div>
-                <input name="password2" type="password" placeholder="Password Confirmation" class="inputLogin">
+                <input name="password2" type="password" placeholder="Confirmación de Contraseña" class="inputLogin">
             </div>
             <div>
-                <button class="btn btn-primary" type="submit"> Registrar </button>
+                <label for="user-type">¿Eres estudiante o profesor?:</label>
+                <select name="user-type" id="user-type" class="inputLogin" onchange="handleUserTypeChange()">
+                    <option value="estudiante">Estudiante</option>
+                    <option value="profesor">Profesor</option>
+                </select>
             </div>
-            <p style="color:white"> ¿Ya tiene una cuenta? <a href="/AppCoder/Login"> Registrate </a></p>
+            <div id="mensaje-soporte" style="display: none; color: red; margin-top: 10px;">
+                Por favor, solicita la contraseña a Soporte para registrarte como profesor.
+            </div>
+            <div>
+                <button class="btn btn-primary" type="submit">Registrar</button>
+            </div>
+            <p style="color:white">¿Ya tienes una cuenta? <a href="/AppCoder/Login">Ingresa</a></p>
         </form>
     </div>
+
+    <script>
+        function handleUserTypeChange() {
+            var userTypeSelect = document.getElementById("user-type");
+            var mensajeSoporte = document.getElementById("mensaje-soporte");
+
+            if (userTypeSelect.value === "profesor") {
+                mensajeSoporte.style.display = "block";
+                document.querySelector('button[type="submit"]').disabled = true;
+            } else {
+                mensajeSoporte.style.display = "none";
+                document.querySelector('button[type="submit"]').disabled = false;
+            }
+        }
+
+        function validarFormulario() {
+            var userTypeSelect = document.getElementById("user-type");
+
+            if (userTypeSelect.value === "profesor") {
+                alert("No se permite el registro como profesor. Por favor, elige 'Estudiante'.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 </html>
+
+
+    <script>
+        function validarFormulario() {
+            var tipoUsuario = document.getElementById("user-type").value;
+            if (tipoUsuario === "profesor") {
+                document.getElementById("mensaje-soporte").style.display = "block";
+                return false;
+            } else {
+                document.getElementById("mensaje-soporte").style.display = "none";
+                return true; 
+            }
+        }
+    </script>
+</body>
+</html>
+

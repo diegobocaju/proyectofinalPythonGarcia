@@ -25,12 +25,18 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'Cursos' %}">Cursos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Entregables' %}">Entregables</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Estudiantes' %}">Estudiantes</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Profesores' %}">Profesores</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Logout' %}">Cerrar Sesion😕 </a></li> 
-                        <li class="nav-item"><a class="nav-link navText" href=""><img src="{{avatar}}" width="40px" alt="perfil"></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Blog' %}">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Profesores' %}">Profesores</a></li> 
                         <li class="nav-item"><a class="nav-link" href="{% url 'perfil' %}"> {{user.username}} </a></li>
+                        {% if not user.is_authenticated %}
+                           <li class="nav-item">
+                                <a class="nav-link" href="{% url 'Login' %}">Iniciar Sesión</a>
+                            </li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                           <li class="nav-item"><a class="nav-link" href="{% url 'Logout' %}">Cerrar Sesión😕</a></li>
+                           <li class="nav-item"><a class="nav-link navText" href=""><img src="{{avatar}}" width="40px" alt="perfil"></a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -69,13 +75,7 @@
                             <a href="{% url 'Cursos' %}">Cursos</a>
                         </li>
                         <li>
-                            <a href="{% url 'Entregables' %}">Entregables</a>
-                        </li>
-                        <li>
                             <a href="{% url 'Profesores' %}">Profesores</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'Estudiantes' %}">Estudiantes</a>
                         </li>
                     </ul>
                 </div>

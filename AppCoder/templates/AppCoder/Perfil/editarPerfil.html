@@ -1,3 +1,48 @@
+<style>
+    body {
+        background-image: linear-gradient(45deg, #1a80ee, #b4be26); /* Set your desired background color here */
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    div {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        display: inline-block;
+        background-color: blue;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #007bff; 
+    }
+</style>
+
 <h3> Editar Perfil </h3>
 <h5> {{user.usuario}} </h5>
 
@@ -6,5 +51,5 @@
         {{ form.as_table }}
     </table>
     <input class="btn" type="submit" value="Editar Perfil">
-    <a href="../changePassword">Cambiar contraseña </a>
+    <a href="../changePassword">Cambiar contraseña</a>
 </form>

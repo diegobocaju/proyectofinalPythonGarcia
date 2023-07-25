@@ -1,13 +1,13 @@
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from AppCoder.models import *
 from AppCoder.forms import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.views import View
+
 
 @login_required
 def inicio(request):
@@ -20,11 +20,6 @@ def cursos(request):
     Cursos = Curso.objects.all()
     return render(request, "AppCoder/cursos.html",{"Cursos": Cursos})
 
-class MiVista(View):
-    def get(self, request):
-        fotos = Foto.objects.all()
-        context = {'Fotos': fotos}
-        return render(request, 'mi_template.html', context)
 
 @login_required
 def profesores(request):
@@ -36,12 +31,7 @@ def estudiantes(request):
     Estudiantes = Estudiante.objects.all()
     return render(request, "AppCoder/estudiantes.html", {"Estudiantes": Estudiantes})
 
-@login_required
-def entregables(request):
-    Entregables = Entregable.objects.all()
-    return render(request, "AppCoder/entregables.html",{"Entregables": Entregables})
 
-@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def setEstudiantes(request):
     Estudiantes = Estudiante.objects.all()
@@ -57,12 +47,12 @@ def setEstudiantes(request):
         miFormulario1 = formSetEstudiante()
     return render(request, "AppCoder/setEstudiantes.html", {'miFormulario1': miFormulario1,'Estudiantes': Estudiantes})
 
-@user_passes_test(lambda u: u.is_superuser)
+
 @login_required
 def getEstudiantes(request):
     return render(request, "AppCoder/getEstudiantes.html")
 
-@user_passes_test(lambda u: u.is_superuser)
+
 @login_required
 def buscarEstudiante(request):
     if request.GET["nombre"]:
@@ -74,7 +64,7 @@ def buscarEstudiante(request):
     
     return HttpResponse(respuesta)
 
-@user_passes_test(lambda u: u.is_superuser)
+
 @login_required
 def setProfesores(request):
     Profesores = Profesor.objects.all()
@@ -91,12 +81,11 @@ def setProfesores(request):
         miFormulario2 = formSetProfesor()
     return render(request, "AppCoder/setProfesores.html", {"miFormulario2":miFormulario2, "Profesores":Profesores})
 
-@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def getProfesores(request):
     return render(request, "AppCoder/getProfesores.html")
 
-@user_passes_test(lambda u: u.is_superuser)
+
 @login_required
 def buscarProfesor(request):
     if request.GET["nombre"]:
@@ -108,27 +97,13 @@ def buscarProfesor(request):
     
     return HttpResponse(respuesta)
 
-@user_passes_test(lambda u: u.is_superuser)
-@login_required
-def setCursos(request):
-    Cursos = Curso.objects.all()
-    miFormulario3 = formSetCurso()
-    if request.method == 'POST':
-        miFormulario3 = formSetCurso(request.POST)
-        print(miFormulario3)
-        if miFormulario3.is_valid():
-            data = miFormulario3.cleaned_data
-            curso = Curso(nombre=data["nombre"],camada=data["camada"], horario=data["horario"])    
-            curso.save()
-            miFormulario3 = formSetCurso()
-            return render(request,"AppCoder/setCursos.html", {"miFormulario3":miFormulario3, "cursos":Cursos})    
-    else:
-        miFormulario3 = formSetCurso()
-    return render(request, "AppCoder/setCursos.html", {"miFormulario3":miFormulario3, "cursos":Cursos})
+
+
 
 @login_required
 def getCursos(request):
-    return render(request, "AppCoder/getCursos.html")
+    cursos = Curso.objects.all()
+    return render(request, 'AppCoder/getCursos.html', {'cursos': cursos})
 
 @login_required
 def buscarCurso(request):
@@ -141,39 +116,38 @@ def buscarCurso(request):
     
     return HttpResponse(respuesta)
 
-@user_passes_test(lambda u: u.is_superuser)
 @login_required
-def setEntregables(request):
-    Entregables = Entregable.objects.all()
+def blog_estudiantes(request):
     if request.method == 'POST':
-        miFormulario4 = formSetEntregable(request.POST)
-        print(miFormulario4)
-        if miFormulario4.is_valid():
-            data = miFormulario4.cleaned_data
-            entregable = Entregable(curso=data["curso"], fecha=data["fecha"], entregada=data["entregada"])    
-            entregable.save()
-            miFormulario4 = formSetEntregable()
-            return render(request, "AppCoder/setEntregables.html", {"miFormulario4": miFormulario4, "Entregables": Entregables})
+        form = EntradaBlogForm(request.POST)
+        if form.is_valid():
+            entrada = form.save(commit=False)
+            entrada.autor = request.user
+            entrada.save()
+            return redirect('Blog')
+
     else:
-        miFormulario4 = formSetEntregable()
-    return render(request, "AppCoder/setEntregables.html", {"miFormulario4": miFormulario4, "Entregables": Entregables})
+        form = EntradaBlogForm()
+
+    entradas = EntradaBlog.objects.filter(autor=request.user).order_by('-fecha_publicacion')
+    return render(request, 'AppCoder/blogEstudiantes.html', {'form': form, 'entradas': entradas})
 
 @login_required
-def getEntregables(request):
-    return render(request, "AppCoder/getEntregables.html")
-
-@login_required
-def buscarEntregable(request):
-    if request.GET["curso"]:
-        curso = request.GET["curso"]
-        entregables = Entregable.objects.filter(curso = curso)
-        return render(request, "AppCoder/getEntregables.html", {"entregables":entregables})
+def setCursos(request):
+    cursos = Curso.objects.all()
+    if request.method == 'POST':
+        form = FormAnotarseCurso(request.POST)
+        if form.is_valid():
+            estudiante = request.user.estudiante
+            curso = form.save(commit=False)
+            curso.save()
+            horario_seleccionado = form.cleaned_data['horario']
+            Inscripcion.objects.create(estudiante=estudiante, curso=curso, horario=horario_seleccionado)
+            return redirect('getCursos')
     else:
-        respuesta = "Sin datos"
-    
-    return HttpResponse(respuesta)
+        form = FormAnotarseCurso()
+    return render(request, 'AppCoder/setCursos.html', {'form': form, 'cursos': cursos})
 
-@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def eliminarEstudiante(request, nombre_estudiante):
     estudiante = Estudiante.objects.get(nombre= nombre_estudiante)
@@ -182,7 +156,7 @@ def eliminarEstudiante(request, nombre_estudiante):
     Estudiantes = Estudiante.objects.all()
     return render (request, "AppCoder/setEstudiantes.html",{'miFormulario1': miFormulario1, 'Estudiantes': Estudiantes})
 
-@user_passes_test(lambda u: u.is_superuser)
+
 @login_required
 def eliminarCurso(request, nombre_curso):
     curso = Curso.objects.get(nombre= nombre_curso)
@@ -191,7 +165,7 @@ def eliminarCurso(request, nombre_curso):
     Cursos = Curso.objects.all()
     return render (request, "AppCoder/setCursos.html",{'miFormulario3': miFormulario3, 'Cursos': Cursos})
 
-@user_passes_test(lambda u: u.is_superuser)
+
 @login_required
 def eliminarProfesor(request, nombre_profesor):
     profesor = Profesor.objects.get(nombre= nombre_profesor)
@@ -200,16 +174,7 @@ def eliminarProfesor(request, nombre_profesor):
     Profesores = Profesor.objects.all()
     return render (request, "AppCoder/setProfesores.html",{'miFormulario2': miFormulario2, 'Profesor': Profesores})
 
-@user_passes_test(lambda u: u.is_superuser)
-@login_required
-def eliminarEntregable(request, curso_entregable):
-    entregable = Entregable.objects.get(curso= curso_entregable)
-    entregable.delete()
-    miFormulario4 = formSetEntregable()
-    Entregables= Entregable.objects.all()
-    return render (request, "AppCoder/setEntregables.html",{'miFormulario2': miFormulario4, 'Entregables': Entregables})
 
-@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def editarEstudiante(request, nombre_estudiante):
     estudiante = Estudiante.objects.get(nombre=nombre_estudiante)
@@ -228,7 +193,7 @@ def editarEstudiante(request, nombre_estudiante):
     miFormulario1 = formSetEstudiante(initial={'nombre': estudiante.nombre, 'apellido': estudiante.apellido, 'email': estudiante.email})
     return render(request, "AppCoder/editarEstudiantes.html", {"miFormulario1": miFormulario1})
 
-@user_passes_test(lambda u: u.is_superuser)
+
 @login_required
 def editarCurso(request, nombre_curso):
     curso = Curso.objects.get(nombre=nombre_curso)
@@ -247,7 +212,7 @@ def editarCurso(request, nombre_curso):
     miFormulario3 = formSetCurso(initial={'nombre': curso.nombre, 'camada': curso.camada, 'horario': curso.horario})
     return render(request, "AppCoder/editarCursos.html", {"miFormulario3": miFormulario3})
 
-@user_passes_test(lambda u: u.is_superuser)
+
 @login_required
 def editarProfesor(request, nombre_profesor):
     profesor = Profesor.objects.get(nombre=nombre_profesor)
@@ -266,24 +231,6 @@ def editarProfesor(request, nombre_profesor):
     miFormulario2 = formSetProfesor(initial={'nombre': profesor.nombre, 'apellido': profesor.apellido, 'email': profesor.email})
     return render(request, "AppCoder/editarProfesores.html", {"miFormulario2": miFormulario2})
 
-@user_passes_test(lambda u: u.is_superuser)
-@login_required
-def editarEntregable(request, curso_entregable):
-    entregable = Entregable.objects.get(curso=curso_entregable)
-    if request.method == 'POST':
-        miFormulario4 = formSetEntregable(request.POST)
-        if miFormulario4.is_valid():
-            data = miFormulario4.cleaned_data
-            entregable.curso = data['curso']
-            entregable.fecha = data['fecha']
-            entregable.entregada = data['entregada']
-            entregable.save()
-            miFormulario4 = formSetEntregable()
-            Entregables = Entregable.objects.all()
-            return render(request, "AppCoder/setEntregables.html", {"miFormulario4": miFormulario4, "Entregables": Entregables})
-    
-    miFormulario4 = formSetEntregable(initial={'curso': entregable.curso, 'fecha': entregable.fecha, 'entregada': entregable.entregada})
-    return render(request, "AppCoder/editarEntregables.html", {"miFormulario4": miFormulario4})
 
 
 def loginWeb(request):
@@ -297,14 +244,18 @@ def loginWeb(request):
     else:
         return render(request,'AppCoder/Login.html')
 
+from django.contrib.auth.forms import UserCreationForm
+
 def registro(request):
     if request.method == 'POST':
         userCreate = UserCreationForm(request.POST)
-        if userCreate is not None:
+        if userCreate.is_valid():
             userCreate.save()
-            return render(request,"AppCoder/Login.html")
+            return render(request, "AppCoder/Login.html")
+
     else:
-        return render(request,"AppCoder/registro.html")
+        return render(request, "AppCoder/registro.html")
+
 
 @login_required
 def perfilView(request):
@@ -342,6 +293,7 @@ def changePassword(request):
         form= ChangePasswordForm(user = usuario)
         return render(request, 'AppCoder/Perfil/changePassword.html', {"form": form})
     
+@login_required    
 def editAvatar(request):
     if request.method == 'POST':
         form = AvatarForm(request.POST, request.FILES)
@@ -365,6 +317,7 @@ def editAvatar(request):
             form = AvatarForm()
     return render(request, "AppCoder/Perfil/avatar.html", {'form': form})
 
+@login_required
 def getavatar(request):
     avatar = Avatar.objects.filter(user = request.user.id)
     try:
@@ -373,5 +326,21 @@ def getavatar(request):
         avatar = None
     return avatar
 
+
+@login_required
+def inscribir_curso(request, curso_id):
+    curso = Curso.objects.get(pk=curso_id)
+
+    if request.method == 'POST':
+        camada = request.POST.get('camada')
+        horario = request.POST.get('horario')
+        inscripcion = Inscripcion(estudiante=request.user.estudiante, curso=curso, horario=horario, camada=camada)
+        inscripcion.save()
+        return redirect('/AppCoder/Perfil/')
     
+
+@login_required
+def perfil_usuario(request):
+    cursos_inscritos = Inscripcion.objects.filter(estudiante=request.user.estudiante)
+    return render(request, 'perfil.html', {'cursos_inscritos': cursos_inscritos})
 

@@ -3,26 +3,56 @@
     {% load static %}
     
         {% block contenidoQueCambia %}
-            <p>Profesores disponibles</p>
-            <table id="tableInfoProfesores">
-                <tr id="tituloTablaProfesores">
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <th>Eliminar</th>
-                    <th>Editar</th>
-                </tr>
-                
-                    {% for profesor in Profesores%}
-                        <tr>
-                            <td>{{profesor.nombre}}</td>
-                            <td>{{profesor.apellido}}</td>
-                            <td>{{profesor.email}}</td>
-                            <td><button class="btn btn-danger btnEliminar"><a href="{% url 'eliminarProfesor' profesor.nombre %}"> X </a></button> </td>
-                            <td><button class="btn btn-danger btnEditar"><a href="{% url 'editarProfesor' profesor.nombre %}"> Editar </a></button> </td>
-                        </tr>
-                    {% endfor %}  
-            </table>            
+            <div class="fotos-container">
+                <div class="foto-item">
+                    <h1> Profesores de Lectura - Aprendiendo a leer juntos </h1>
+                    <img src="{% static 'AppCoder/assets/images/Profesores/icono1.jpg' %}" alt="{{ foto.descripcion }}"><br>
+                    
+                    <p>Bienvenido/a a Profesores de Lectura, el lugar donde la magia de la lectura cobra vida. Nuestra comunidad está formada por profesionales apasionados y comprometidos con la enseñanza de la lectura, con el objetivo de despertar el amor por la lectura en todos nuestros estudiantes.
+                        ¿Quiénes somos?
+                        En Profesores de Lectura, somos un equipo de docentes especializados en el área de la lectura y la alfabetización. Nuestra misión es proporcionar a los estudiantes las herramientas y habilidades necesarias para convertirse en lectores ávidos, críticos y comprensivos. Creemos que la lectura es una puerta hacia el conocimiento y la imaginación, y queremos abrir esa puerta para cada estudiante que se una a nosotros.
+                        Nuestros servicios:<br>
+                        1) Clases personalizadas: Ofrecemos clases individuales y grupales adaptadas a las necesidades de cada estudiante. Nuestros profesores utilizan enfoques pedagógicos efectivos y creativos para garantizar un aprendizaje significativo y divertido.<br>
+                        2) Evaluación y seguimiento: Realizamos evaluaciones periódicas para identificar el nivel de lectura de cada estudiante y diseñar planes de estudio personalizados. El seguimiento constante nos permite medir el progreso y hacer ajustes según sea necesario.<br>
+                        3) Talleres y actividades: Organizamos talleres interactivos y actividades lúdicas que fomentan el amor por la lectura y desarrollan habilidades específicas, como la comprensión lectora y la expresión oral.<br>
+                        4) Asesoramiento a padres y educadores: Trabajamos en colaboración con los padres y educadores para brindarles herramientas y estrategias que les permitan apoyar el desarrollo de la lectura en el hogar y en el aula.<br>
+                         - ¿Por qué elegirnos?<br>
+                        
+                        Nuestros profesores son expertos en el campo de la lectura y la alfabetización, con una amplia experiencia en la enseñanza de diversas edades y niveles educativos.<br>
+                        Nos apasiona lo que hacemos, y esa pasión se refleja en cada sesión de enseñanza.<br>
+                        Utilizamos metodologías innovadoras y recursos didácticos actualizados para mantener el interés y la motivación de nuestros estudiantes.<br>
+                        Creemos en la importancia de la individualización del aprendizaje y en crear un ambiente de confianza y respeto.<br>
+                        ¡Únete a nosotros en este emocionante viaje de descubrimiento a través de la lectura! Juntos, aprenderemos, creceremos y nos sumergiremos en mundos fascinantes a través de las páginas de los libros.<br> 
+                        ¡Contáctanos ahora y comencemos esta maravillosa aventura de aprendizaje!<br>
+                    </p>
+                    <h1> Presentacion de algunos de nuestros profesores </h1>
+                    <h2> Profesor David Sánchez </h2>
+                    <img src="{% static 'AppCoder/assets/images/Profesores/profesor5.jpg' %}" alt="{{ foto.descripcion }}">
+                    <p>
+                        El Profesor David Sánchez es un educador altamente calificado y apasionado por el desarrollo del potencial humano a través de la lectura. Con más de 7 años de experiencia en la enseñanza y un enfoque especial en la aceleración del aprendizaje, es reconocido por su capacidad para inspirar a sus estudiantes y guiarlos hacia un camino de crecimiento intelectual y creatividad.
+                    </p>
+                    <h2> Profesora Carolina Rodríguez </h2>
+                    <img src="{% static 'AppCoder/assets/images/Profesores/profesor8.jpg' %}" alt="{{ foto.descripcion }}">
+                    <p>
+                        La Profesora Carolina Rodríguez es una educadora dedicada y entusiasta, con una pasión innegable por la enseñanza de la lectura y el desarrollo de habilidades literarias en sus alumnos. Con más de 12 años de experiencia en el ámbito educativo, se destaca por su enfoque personalizado y su compromiso inquebrantable de inspirar el amor por la lectura en cada uno de sus estudiantes.
+                    </p>
+                    <h2> Profesora Maria Lopez </h2>
+                    <img src="{% static 'AppCoder/assets/images/Profesores/profesor1.jpg' %}" alt="{{ foto.descripcion }}">
+                    <p>
+                        El curso diseñado por la Profesora María está enfocado en brindar a los participantes una comprensión profunda de la lectura y técnicas efectivas para mejorarla. Los estudiantes adquirirán conocimientos y habilidades clave
+                    </p>
+                    <h2> Profesor Daniel Gómez</h2>
+                    <img src="{% static 'AppCoder/assets/images/Profesores/profesor2.jpg' %}" alt="{{ foto.descripcion }}">
+                    <p>
+                        El Profesor Daniel Gómez es un experto en el campo de la lectura y la comprensión lectora, con una amplia trayectoria en la enseñanza y el desarrollo de habilidades literarias en sus estudiantes. Su pasión por la lectura y el deseo de ayudar a otros a mejorar su comprensión lectora lo han llevado a diseñar un curso completo y enriquecedor.
+                    </p>
+                    <h2> Profesora Ana Gutiérrez </h2>
+                    <img src="{% static 'AppCoder/assets/images/Profesores/profesor3.jpg' %}" alt="{{ foto.descripcion }}">
+                    <p>
+                        La Profesora Ana Gutiérrez es una educadora apasionada y experta en el campo de la comprensión lectora. Con más de 8 años de experiencia en la enseñanza, ha dedicado su carrera a ayudar a sus estudiantes a desarrollar habilidades sólidas de lectura y comprensión, empoderándolos para convertirse en lectores críticos y reflexivos.
+                    </p>
+                    
+            </div>            
             <div class="formSetProfesor">
                 {% block setProfesor %}
                 {% endblock %}
@@ -31,7 +61,5 @@
                 {% block getProfesor %}
                 {% endblock %}
             </div>
-            <a href="{% url 'setProfesor' %}"><button class="btn">Crear Profesor</button></a>
-            <a href="{% url 'getProfesor' %}"><button class="btn">Buscar Profesor</button></a> 
         {% endblock %}
 </div>

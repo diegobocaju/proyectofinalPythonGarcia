@@ -11,9 +11,13 @@
 
         {% if cursos %}
             {% for curso in cursos %}
-                <li>{{curso.nombre}}</li>
-                <li>{{curso.camada}}</li>
-                <li>{{curso.horario}}</li>
+                <h3>{{ curso.nombre }}</h3>
+                <ul>
+                    {% for horario in curso.horarios %}
+                        <li>{{ horario }}</li>
+                        <button class="btn btn-success btnConfirmar" data-curso="{{ curso.nombre }}" data-horario="{{ horario }}">Confirmar</button>
+                    {% endfor %}
+                </ul>
             {% endfor %}
         {% endif %}
     {% endblock %}    

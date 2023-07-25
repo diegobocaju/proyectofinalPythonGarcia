@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog de Estudiantes</title>
+    <style>
+        body {
+            background: linear-gradient(rgb(60, 63, 226), rgb(211, 214, 40));
+        }
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        {% block contenidoQueCambia %}
+            <h3>Blog de Estudiantes</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Publicar entrada</button>
+            </form>
+
+            <h4>Entradas existentes:</h4>
+            <ul>
+                {% for entrada in entradas %}
+                    <li>
+                        <h5>{{ entrada.titulo }}</h5>
+                        <p>{{ entrada.contenido }}</p>
+                        <p>Publicado por: {{ entrada.autor.username }}</p>
+                        <p>Fecha de publicación: {{ entrada.fecha_publicacion }}</p>
+
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'Cursos' %}"><button type="button" class="btn"> Volver a Inicio</button></a>
+        {% endblock %}
+    {% else %}
+        <h3>Solo los estudiantes pueden acceder a este blog.</h3>
+        <a href="{% url 'Login' %}">Iniciar sesión</a>
+        
+    {% endif %}
+</body>
+</html>

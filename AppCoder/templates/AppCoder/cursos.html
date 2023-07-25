@@ -4,28 +4,6 @@
 
     {% block contenidoQueCambia %}
 
-        <div class="contenido-container">
-            <p>Cursos disponibles</p>
-            <table id="tableInfoCursos">
-                <tr id="tituloTablaCursos">
-                    <th>Nombre</th>
-                    <th>Camada</th>
-                    <th>Horario</th>
-                    <th>Eliminar</th>
-                    <th>Editar</th>
-                </tr>
-                
-                {% for curso in Cursos %}
-                    <tr>
-                        <td>{{ curso.nombre }}</td>
-                        <td>{{ curso.camada }}</td>
-                        <td>{{ curso.horario }}</td>
-                        <td><button class="btn btn-danger btnEliminar"><a href="{% url 'eliminarCurso' curso.nombre %}">X</a></button></td>
-                        <td><button class="btn btn-warning btnEditar"><a href="{% url 'editarCurso' curso.nombre %}">Editar</a></button></td>
-                    </tr>
-                {% endfor %}
-            </table>
-
             <div class="fotos-container">
                     <div class="foto-item">
                         <h1> Cursos de Lectura </h1>
@@ -33,7 +11,8 @@
                         <p>Aprender lectura veloz te ayudará a entender de forma más eficiente y RÁPIDA los textos que lees. 
                             Podrás disfrutar de todos esos libros que tienes en tu lista de "próximas lecturas", además tendrás más capacidad de retención contenidos, mejorarás tus capacidades de estudio y se te abrirán un sinfín de nuevas oportunidades en el maravilloso mundo de la lectura.
                             Estos cursos no sólo te enseñarán a que el movimiento de tus ojos sea más veloz, sino que aprenderás a leer más rápido entendiendo lo que lees.
-                        </p> <br>
+                        </p>
+                        <br>
                         <h1> Curso "Súper Cerebro y Súper lectura" </h1>
                         <img src="{% static 'AppCoder/assets/images/imagen2.jpg' %}" alt="{{ foto.descripcion }}">
                         <p>A lo largo del curso te enseña distintas técnicas para aumentar tu velocidad de lectura. Tú decides cuál es la que más te acomoda.<br>
@@ -45,8 +24,14 @@
                             - Resolver problemas más fácil y rápido que antes.<br>
                             - Crear hábitos que estimulen tu inteligencia y creatividad.<br>
                             - Aprender rituales que te predispongan a la lectura diaria.<br>
-                        </p><br>
-                        <h1> Curso "Súper Lector" </h1>
+                        </p>
+                        
+                        <div class="btn-container">
+                            <a href="{% url 'Profesores' %}"><button type="button" class="btn"> Ver profesores </button></a>
+                            <button onclick="mostrarHorario('Curso Súper Cerebro y Súper lectura')" class="btn">Ver Horarios</button>    
+                        </div>
+                        <br>
+                        <h1> Curso Súper Lector </h1>
                         <img src="{% static 'AppCoder/assets/images/imagen3.jpg' %}" alt="{{ foto.descripcion }}">
                         <p>Es un sistema que te promete que, en 3 semanas o menos, mejorarás tu Velocidad y Comprensión lectora y desarrollarás el hábito de la lectura rápida, con ejercicios 100% prácticos y fáciles de realizar.<br>
                             Es un curso pensado en:<br>
@@ -59,7 +44,12 @@
 
                             - Leer al menos de 2 a 4 libros cada mes.<br>
                             - Cambiar los malos hábitos de lectura que te hacen desconcentrarte y no avanzar mientras lees.<br>
-                            - Comprender todo lo que leas y no tener que volver a leer nuevamente un párrafo para entenderlo.</p><br>
+                            - Comprender todo lo que leas y no tener que volver a leer nuevamente un párrafo para entenderlo.</p>
+                            <div class="btn-container">
+                                <a href="{% url 'Profesores' %}"><button type="button" class="btn"> Ver profesores </button></a>
+                                <button onclick="mostrarHorario('Curso Súper Lector')" class="btn">Ver Horarios</button>
+                            </div>
+                            <br>
                             <h1> Curso online sobre Lectura en general </h1>
                             <img src="{% static 'AppCoder/assets/images/imagen4.jpg' %}" alt="{{ foto.descripcion }}">
                             <p>Si te apasiona la lectura, entonces tienes que darle un vistazo a este curso.<br>    
@@ -69,7 +59,12 @@
                                 - Cómo emplear técnicas y estrategias de comprensión lectora.<br>
                                 - Aplicar los principios de la comprensión lectora mediante una serie de ejercicios.<br>
                                 - Identificar los errores que puedes estar cometiendo en tu comprensión lectora.<br>
-                                - También, se tratan temas claves, como los mapas mentales, mapas conceptuales, subrayado, cómo hacer buenos resúmenes, fotolectura, lectura silenciosa, entre muchos otros.</p><br>
+                                - También, se tratan temas claves, como los mapas mentales, mapas conceptuales, subrayado, cómo hacer buenos resúmenes, fotolectura, lectura silenciosa, entre muchos otros.</p>
+                            <div class="btn-container">
+                                <a href="{% url 'Profesores' %}"><button type="button" class="btn"> Ver profesores </button></a>
+                                <button onclick="mostrarHorario('Curso online sobre Lectura en general')" class="btn">Ver Horarios</button
+                            </div>
+                            <br>
                             <h1> Curso de Lectura Rápida con Mapas Mentales </h1>
                             <img src="{% static 'AppCoder/assets/images/imagen5.jpg' %}" alt="{{ foto.descripcion }}">
                             <p>Está dirigido a:<br>
@@ -79,17 +74,56 @@
                                 - Profesionales que deseen actualizarse.<br>
                                 - Al igual que el curso Súper Lector, a través de los Mapas Mentales multiplicarás tu velocidad y comprensión lectora.<br>
                                 - Extraerás con mayor facilidad la información esencial de cada texto que leas, sin importar si son libros técnicos o novelas.<br>
-                            </p><br>
+                            </p>
+                            
+                            <div class="btn-container">
+                                <a href="{% url 'Profesores' %}"><button type="button" class="btn"> Ver profesores </button></a>
+                                <button onclick="mostrarHorario('Curso de Lectura Rápida con Mapas Mentales')" class="btn">Ver Horarios</button>
+                            </div>
+                            <br>
                             <h1>  Curso bonus "Aprendiendo a aprender" </h1>
                             <img src="{% static 'AppCoder/assets/images/imagen6.jpg' %}" alt="{{ foto.descripcion }}">
-                            <p>Se llama "Aprendiendo a aprender: Poderosas herramientas mentales con las que podrás dominar temas difíciles", y es MUY RECOMENDADO si lo que quieres es mejorar tu forma de aprendizaje y comprensión.<br>
+                            <p>  Se llama "Aprendiendo a aprender: Poderosas herramientas mentales con las que podrás dominar temas difíciles", y es MUY RECOMENDADO si lo que quieres es mejorar tu forma de aprendizaje y comprensión.<br>
                                 - Aprenderás las técnicas de aprendizaje utilizadas por expertos en arte, música, literatura, matemáticas, ciencia, deportes y más disciplinas.<br>
                                 - Aprenderás técnicas de memoria.<br>
                                 - Cómo evitar la procrastinación (aplazar una obligación o trabajo).<br>
                                 - Cómo dominar temas complicados.<br>
                                 - Aprender todo esto, te ayudará a sí o sí a tener una lectura mucho más satisfactoria y a que le saques el mayor provecho a tu tiempo leyendo.<br>
-                            </p><br>
+                            </p>
+                            
+                            <div class="btn-container">
+                                <a href="{% url 'Profesores' %}"><button type="button" class="btn"> Ver profesores </button></a>
+                                <button onclick="mostrarHorario('Curso bonus Aprendiendo a aprender')" class="btn">Ver Horarios</button></div>
+                            <br>
                     </div>
+                    <script>
+                        function mostrarHorario(curso) {
+                            let horario = '';
+                            let horario1= '';
+                            
+                            if (curso === 'Curso Súper Cerebro y Súper lectura') {
+                                horario = '- Lunes y Miércoles 14:00 - 16:00';
+                                horario1='- Martes y Jueves de 19:00 - 21:00';
+                            } else if (curso === 'Curso Súper Lector') {
+                                horario = '- Martes y Jueves 10:00 - 12:00';
+                                horario1='- Lunes y Miércoles 18:00 - 20:00';
+                            }else if (curso === 'Curso online sobre Lectura en general') {
+                                horario = '- Martes y Jueves 10:00 - 12:00';
+                                horario1= '- Lunes y Miércoles 18:00 - 20:00';
+                            }else if (curso === 'Curso de Lectura Rápida con Mapas Mentales') {
+                                horario = '- Martes y Jueves 13:00 - 15:00';
+                                horario1= '- Lunes y Miércoles 21:00 - 23:00'; 
+                            }else if (curso === 'Curso bonus Aprendiendo a aprender') { 
+                                horario = '- Martes y Jueves 17:00 - 19:00';
+                                horario1= '- Lunes y Miércoles 07:00 - 09:00'; 
+                            }                                                              
+                            const ventanaEmergente = window.open('', '_blank', 'width=400,height=200,top=50%,left=50%,transform=translate(-50%, -50%)');
+                            ventanaEmergente.document.write('<h2>Horarios del Curso Seleccionado:</h2>');
+                            ventanaEmergente.document.write('<p>' + horario + '</p>');
+                            ventanaEmergente.document.write('<p>' + horario1 + '</p>');
+                            ventanaEmergente.document.close();
+                        }
+                    </script>
             </div>
             
             <div class="formSetCurso">
@@ -99,11 +133,8 @@
             <div class="formGetCurso">
                 {% block getCurso %}
                 {% endblock %}
-            </div>
-            
-            <a href="{% url 'setCurso' %}"><button class="btn">Crear Curso</button></a>
-            <a href="{% url 'getCurso' %}"><button class="btn">Buscar Curso</button></a>
+        <div>
+            <a href="{% url 'setCurso' %}"><button class="btn">Anotarse</button></a>
         </div>
-
     {% endblock %}
 </div>

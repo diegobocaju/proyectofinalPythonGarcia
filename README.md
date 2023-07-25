@@ -1,7 +1,7 @@
-﻿# tercerpre-entregaGarcia
+﻿# Proyecto
 # Proyecto EduRead
 
-Este proyecto es una aplicación web desarrollada con Django y Bootstrap. Proporciona información sobre cursos, entregables, profesores y estudiantes en el contexto de la plataforma educativa de EduRead.
+Este proyecto es una aplicación web desarrollada con Django y Bootstrap. Proporciona información sobre cursos,profesores y blog de estudiantes. En el mismo se podra anotar a cursos sobre lectura, conocer a algunos de sus profesores y tendra a su disposicion un blog (que solo aparecerá si sos estudiante), en el cual podra brindar sus opiniones sobre los cursos y los profesores.
 
 ## Instalación
 
@@ -24,9 +24,9 @@ python manage.py runserver
 
 ## Orden recomendado para probar las funcionalidades
 
-1. Navega a la página http://127.0.0.1:8000/AppCoder/inicio/
-2. Explora las diferentes secciones del sitio que se muestran en el navbar: cursos, entregables, estudiantes y profesores.
-3. Registra un nuevo estudiante, profesor, entregable y curso.
+1. Navega a la página http://127.0.0.1:8000/
+2. Explora las diferentes secciones del sitio que se muestran en el navbar: cursosprofesores y blog 
+3. Registra un nuevo estudiante, y si es profesor deberá solicitar su contraseña a soporte
 4. Verifica que los datos se guarden correctamente en la base de datos, por medio del boton "buscar".
 5. Comprueba que los iconos de las redes sociales te redirijan a las respectivas páginas externas al hacer clic en ellos.
 6. Puedes navegar por medio del footer hacia las distintas secciones de la web.

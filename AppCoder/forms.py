@@ -1,10 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm,PasswordChangeForm
 from django.contrib.auth.models import User
+from AppCoder.models import *
 class formSetEstudiante(forms.Form):
     nombre = forms.CharField(max_length=30)
     apellido = forms.CharField(max_length=30)
     email = forms.EmailField()
+
+    def __str__(self):
+        return self.titulo
 
 class formSetProfesor (forms.Form):
     nombre = forms.CharField(max_length=30)
@@ -16,10 +20,6 @@ class formSetCurso (forms.Form):
     camada = forms.CharField(max_length=30)
     horario = forms.CharField(max_length=30)
 
-class formSetEntregable (forms.Form):
-    curso = forms.CharField(max_length=30)
-    fecha = forms.CharField(max_length=30)
-    entregada = forms.BooleanField()
 
 class UserEditForm(UserChangeForm):
     username = forms.CharField(widget= forms.TextInput(attrs={"placeholder":"Username"}))
@@ -48,3 +48,14 @@ class ChangePasswordForm(PasswordChangeForm):
 
 class AvatarForm(forms.Form):
     avatar = forms.ImageField()
+
+class FormAnotarseCurso(forms.ModelForm):
+    class Meta:
+        model = Curso
+        fields = ['nombre', 'camada', 'horario']
+
+class EntradaBlogForm(forms.ModelForm):
+    class Meta:
+        model = EntradaBlog
+        fields = ['titulo', 'contenido']
+
